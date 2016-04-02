@@ -27,8 +27,48 @@ struct node{
 	int data;
 	struct node *next;
 };
-
-
 int between_days(struct node *date1head, struct node *date2head){
-	return -1;
+	if (date1head == NULL||date2head == NULL)
+		return -1;
+	struct node *temp1 = NULL, *temp2 = NULL;
+	temp1 = (struct node *)malloc(sizeof(struct node));
+	temp2 = (struct node *)malloc(sizeof(struct node));
+	temp1 = date1head;
+	temp2 = date2head;
+	int Arr1[10], Arr2[10], i = 0, j = 0, D1 = 0, D2 = 0, M1 = 0, M2 = 0, Y1 = 0, Y2 = 0, Day_count = 0;
+	while (temp1 != NULL&&temp2 != NULL){
+		Arr1[i] = temp1->data;
+		i++;
+		Arr2[j] = temp2->data;
+		j++;
+		temp1 = temp1->next;
+		temp2 = temp2->next;
+	}
+	for (i = 0; i < 2; i++)
+		D1 = 10 * D1 + Arr1[i];
+	for (i = 0; i < 2; i++)
+		D2 = 10 * D2 + Arr2[i];
+	for (i = 2; i < 4; i++)
+		M1 = 10 * M1 + Arr1[i];
+	for (i = 2; i < 4; i++)
+		M2 = 10 * M2 + Arr2[i];
+	for (i = 4; i < 8; i++)
+		Y1 = 10 * Y1 + Arr1[i];
+	for (i = 4; i < 8; i++)
+		Y2 = 10 * Y2 + Arr2[i];
+	if (D1 == D2&&M1 == M2&&Y1 == Y2){
+		if (D1 == 31 && D2 == 1 || D1 == 30 && D2 == 1)
+			return -1;
+	}
+	if (D1>D2&&M1 == M2&&Y1 == Y2){
+		if (D1 == 31 || D1 == 30){
+			Day_count = D2 - 1;
+		}
+		else
+			Day_count = D1 - D2 - 1;
+	}
+	if (D1<D2&&M1 == M2&&Y1 == Y2){
+		Day_count = D2 - D1 - 1;
+	}
+	return Day_count;
 }
